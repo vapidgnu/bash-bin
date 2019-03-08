@@ -24,8 +24,6 @@ FNT=$1; PIX=$2; STY=$3
 # this command should change the current terminal
 # emulators font.
 
-printf \e]710;%s\007 xft:${FNT}:style=${STY}:pixelsize=${PIX}
-
-
+printf \e]710;%s\007 xft:$FNT:style=$STY:pixelsize=$PIX
 
 

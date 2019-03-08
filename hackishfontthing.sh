@@ -29,4 +29,3 @@ printf \e]710;%s\007 xft:${FNT}:style=${STY}:pixelsize=${PIX}
 
 
 
->>>>>>> testing

@@ -18,10 +18,26 @@ M_LIST='/ /sys /dev /proc'
 IS_MOUNTED()
 {
     for P in $(echo M_LIST); do
-        mountpoint $P &> /dev/null
+        mountpoint $P 2> /dev/null
     done
 }
-#
+## or . ...
+
+A_LIST=(/ /sys /dev /proc)
+A_MOUNTED()
+{
+    for D in ${A_LIST[@]}; do
+        mountpoint ${A_LIST[@]} 2> /dev/null
+    done
+    return 0
+}
+
+function func()
+{
+    echo '$@: '$@
+    echo "1:$1 2:$2 3:$3 4:$4"
+    echo "number of args $#"
+}
 
 is_root()
 {

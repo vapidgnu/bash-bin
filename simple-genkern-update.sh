@@ -9,7 +9,7 @@ test -d $2 && SRC_DIR=$2 || SRC_DIR="/usr/src"
 echo "Press [Enter] to continue! ^c to quit"
 read
 
-cd /home/dotc/sandbox/usr/src > /dev/null 2>&1 || echo $?
+cd $SRC_DIR > /dev/null 2>&1 || echo $?
 
 unlink linux > /dev/null 2>&1 || \
         test ! -e linux || \
@@ -22,12 +22,13 @@ zcat /proc/config.gz > linux/.config
 zcat /proc/config.gz > linux/config-current
 
 cd
-echo /usr/bin/genkernel --makeopts="-j8" \
-        --kernel-config=/home/dotc/sandbox/usr/src/linux/config-current \
+/usr/bin/genkernel \
+        --makeopts="-j8" \
+        --kernel-config=${SRC_DIR}/linux/config-current \
         --oldconfig \
-        --microcode \
+#        --microcode \
         all
-echo grub-mkconfig -o /boot/grub/grub.cfg
+grub-mkconfig -o /boot/grub/grub.cfg
 
 
 

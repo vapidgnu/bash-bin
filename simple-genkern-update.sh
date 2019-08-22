@@ -3,20 +3,19 @@
 #### "WARNING! THIS SCRIPTY IS TIPSY"
 echo "WARNING! THIS SCRIPTY IS TIPSY"
 
-test -d $1  || exit 2
+test -d $1  || exit 3
 test -d $2 && SRC_DIR=$2 || SRC_DIR="/usr/src"
 
 echo "Press [Enter] to continue! ^c to quit"
 read
 
-cd $SRC_DIR > /dev/null 2>&1 || echo $?
-
+cd $SRC_DIR > /dev/null 2>&1 || exit 6
 unlink linux > /dev/null 2>&1 || \
         test ! -e linux || \
         rm -vrI linux || \
         echo "can't cope with linux"
 
-ln -s $1 linux || echo $?
+ln -s $1 linux || exit 13
 
 zcat /proc/config.gz > linux/.config
 zcat /proc/config.gz > linux/config-current

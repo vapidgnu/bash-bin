@@ -16,7 +16,7 @@ echo "Attempting a symbolic link of ${1} to ${SRC_DIR}/linux"
 echo "Press [Enter] to continue! ^c to quit"
 read
 
-# rid prior linux linux for otherwise; break if unable. 
+# remove prior linux link otherwise break if unable. 
 cd $SRC_DIR > /dev/null 2>&1 || exit 6
 unlink linux > /dev/null 2>&1 || \
         test ! -e linux || \

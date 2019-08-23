@@ -43,14 +43,15 @@ is_root()
 {
     if [[ "$UID" -ne 0 ]]; then
         echo "Must be root to run: $(basename $0)"
-	exit 1
+	exit 
     fi
 }
 
 IS_ROOT()
 {
     [[ "$UID" -ne 0 ]] && \
-    echo "Must be root to run: $(basename $0)"
+    echo "Must be root to run: $(basename $0)" && \
+    exit
 }
 
 CMD="$0"

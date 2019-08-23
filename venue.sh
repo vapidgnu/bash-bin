@@ -3,7 +3,9 @@
 
 
 
-CHROOT='/' && SYS='/sys' && DEV='/dev' && PROC='/proc'
+
+#CHROOT='/' && SYS='/sys' && DEV='/dev' && PROC='/proc'
+CHROOT='/' ; SYS='/sys' ; DEV='/dev' ; PROC='/proc'
 is_mounted_v()
 {
     mountpoint ${CHROOT}

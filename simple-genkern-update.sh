@@ -9,7 +9,7 @@ test -d $2 && SRC_DIR=$2 || SRC_DIR="/usr/src"
 test -d $SRC_DIR || exit 3
 
 # confirm with user
-echo "Attempting to symbolic link ${1} to ${SRC_DIR}/linux"
+echo "Attempting a symbolic link of ${1} to ${SRC_DIR}/linux"
 echo "Press [Enter] to continue! ^c to quit"
 read
 

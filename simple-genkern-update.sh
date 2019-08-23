@@ -1,5 +1,6 @@
 #!/bin/bash
 #  vapidgnu
+# USAGE: simple-genkern-update.sh linux-kernel-X.X.X /usr/src
 #### "WARNING! THIS SCRIPTY IS TIPSY"
 echo "WARNING! THIS SCRIPTY IS TIPSY"
 
@@ -34,7 +35,6 @@ cd
         --makeopts="-j8" \
         --kernel-config=${SRC_DIR}/linux/config-current \
         --oldconfig \
-#        --microcode \
         all
 
 grub-mkconfig -o /boot/grub/grub.cfg

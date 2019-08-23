@@ -15,7 +15,7 @@ unlink linux > /dev/null 2>&1 || \
         rm -vrI linux || \
         echo "can't cope with linux"
 
-ln -s $1 linux || exit 13
+ln -s $1 linux > /dev/null 2>&1 || exit 13
 
 zcat /proc/config.gz > linux/.config
 zcat /proc/config.gz > linux/config-current

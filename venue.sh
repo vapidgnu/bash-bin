@@ -19,7 +19,7 @@ is_mounted_v()
 M_LIST='/ /sys /dev /proc'
 IS_MOUNTED()
 {
-    for P in $(echo M_LIST); do
+    for P in $(echo $M_LIST); do
         mountpoint $P 2> /dev/null
     done
 }

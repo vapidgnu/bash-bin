@@ -1,5 +1,4 @@
 #!/bin/sh
-#  vapidgnu
 # USAGE: simple-genkern-update.sh linux-kernel-X.X.X /usr/src
 #### "WARNING! THIS SCRIPTY IS TIPSY"
 echo "WARNING! THIS SCRIPTY IS TIPSY"

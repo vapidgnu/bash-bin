@@ -1,8 +1,7 @@
 #!/bin/sh
 # USAGE: simple-genkern-update.sh linux-kernel-X.X.X /usr/src
-#### "WARNING! THIS SCRIPTY IS TIPSY"
+#### 
 cat << EOF 
-WARNING! THIS SCRIPTY IS TIPSY
 System must currently have a working
 kernel config located at /proc/config.gz 
 EOF

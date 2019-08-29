@@ -1,9 +1,11 @@
 #!/bin/sh
 # USAGE: simple-genkern-update.sh linux-kernel-X.X.X /usr/src
 #### "WARNING! THIS SCRIPTY IS TIPSY"
-echo "WARNING! THIS SCRIPTY IS TIPSY"
-echo "System must currently have a working"
-echo "kernel config located at /proc/config.gz" 
+cat << EOF 
+WARNING! THIS SCRIPTY IS TIPSY
+System must currently have a working
+kernel config located at /proc/config.gz 
+EOF
 
 # test user supplied arguments. 
 test -d $1  || exit 2

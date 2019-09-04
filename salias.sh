@@ -1,4 +1,5 @@
 #!/bin/bash
+#/home/dotc/bin/salias
 # add an aliased command to a list
 # then try to source that list. 
 

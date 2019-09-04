@@ -1,16 +1,11 @@
 
 #!/bin/bash
 
-function is_env_mounted {
-    for MP in / /sys /dev /proc; do
-        mountpoint $MP
-    done
-}
 
 
-#CHROOT='/' && SYS='/sys' && DEV='/dev' && PROC='/proc'
 CHROOT='/' ; SYS='/sys' ; DEV='/dev' ; PROC='/proc'
-function is_mounted_v() {
+is_mounted_v()
+{
     mountpoint ${CHROOT}
     mountpoint ${SYS}
     mountpoint ${DEV}
@@ -20,32 +15,52 @@ function is_mounted_v() {
 ## or . ...
 
 M_LIST='/ /sys /dev /proc'
-function IS_MOUNTED() {
-    for P in $(echo $M_LIST); do
+IS_MOUNTED()
+{
+    for P in $(echo M_LIST); do
         mountpoint $P 2> /dev/null
     done
 }
 ## or . ...
 
 A_LIST=(/ /sys /dev /proc)
-function A_MOUNTED() {
+A_MOUNTED()
+{
     for D in ${A_LIST[@]}; do
         mountpoint ${A_LIST[@]} 2> /dev/null
     done
     return 0
 }
 
-function is_root() {
+function func()
+{
+    echo '$@: '$@
+    echo "1:$1 2:$2 3:$3 4:$4"
+    echo "number of args $#"
+}
+
+is_root()
+{
     if [[ "$UID" -ne 0 ]]; then
         echo "Must be root to run: $(basename $0)"
-	exit 
+	exit 1
     fi
 }
 
-function IS_ROOT() {
+IS_ROOT()
+{
     [[ "$UID" -ne 0 ]] && \
-    echo "Must be root to run: $(basename $0)" && \
-    exit
+    echo "Must be root to run: $(basename $0)"
 }
+
+CMD="$0"
+CMD_ARGS="$@"
+CHROOT="$1"
+SHELL="$SHELL"
+
+if [[ -z ${CHROOT} && ! -d ${CHROOT} ]]; then
+    echo "${CHROOT} must be a directory"
+    exit 2 
+fi
 
 

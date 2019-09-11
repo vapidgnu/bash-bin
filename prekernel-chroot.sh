@@ -33,7 +33,7 @@ env-update
 emerge-webrsync
 
 # set gentoo PROFILE to latest stable desktop if not set
-test -z ${PROFILE} && \
+test -z $PROFILE && \
         PROFILE=$(eselect profile list | \
         awk '/desktop\ / && /stable/' | \
         tail -n1 | awk '{print $2}')

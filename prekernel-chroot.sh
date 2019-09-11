@@ -6,7 +6,7 @@
 
 USRNAME=        # default larry
 GROUPS='wheel,portage,audio,video,usb,cdrom'
-TZ=             # default 'merica/Los_Angeles
+TZ=             # default America/Los_Angeles
 PROFILE='default/linux/amd64/17.1/desktop' # defaults to latest s/desktop
 GIT='https://github.com/vapidgnu/'
 

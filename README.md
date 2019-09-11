@@ -15,4 +15,4 @@
 
 ### disk_mount.sh
 * needs some level of dynamic assessment of the disk space
-* also need to write/find useful snippets for partion schemes. 
+* also need to write/find useful snippets for partition schemes. 

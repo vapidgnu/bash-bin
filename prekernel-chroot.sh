@@ -10,6 +10,8 @@ TZ=             # default America/Los_Angeles
 PROFILE='default/linux/amd64/17.1/desktop' # defaults to latest s/desktop
 GIT='https://github.com/vapidgnu/'
 
+
+
 un_zip() {
         cd $1 || exit $?
         test ! -e $2 && exit $?
@@ -50,6 +52,7 @@ wget ${GIT}lap0-etc-portage/archive/master.zip -O /etc/portage/CONF.zip || exit 
 
 
 # decompress /etc/portage
+# cd $1; unzip $2; rm $2; cd -
 un_zip /etc/portage CONF.zip
 
 #cd /etc/portage || exit $?
@@ -69,6 +72,8 @@ emerge -qv gentoo-sources
 emerge -vquNDkG system || exit $?
 wget ${GIT}var-db-portage/archive/master.zip -O /var/db/portage/world.zip || exit $?
 
+# decompress world file, though should DL raw text. 
+# cd $1; unzip $2; rm $2; cd -
 un_zip /var/dp/portage world.zip
 
 ### System Configurations

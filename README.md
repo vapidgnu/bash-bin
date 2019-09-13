@@ -7,16 +7,16 @@
 * If you want to deploy any of this code, good luck. 
 
 # three scripts to install gentoo!
-## ./setup-gentoo-drive.sh
+## `./setup-gentoo-drive.sh`
 * run first!
-* best ran from the gentoo minimal install image because 
-* doesn't test if /dev/shm is a symlink, 
-* if installing from ubuntu `test -s /dev/shm` && echo yes will tell you
-## ./set-post-chroot
+* best ran from the gentoo minimal install image because: 
+* doesn't test if `/dev/shm` is a symlink. *WILLFIX*
+* if installing from ubuntu `test -s /dev/shm && echo yes` will tell you
+## `./set-post-chroot`
 * run once inside the chroot
-* needs work, and a way to drop in your own /etc/profile confiuration easyly
+* needs work, and a way to drop in your own /etc/portage configs easily 
 * how it fetches and decompress from github is gross as fuck. sorry. 
-## ./simple_genkern_update.sh
+## `./simple_genkern_update.sh`
 * needs further testing
 
 ### setup-gentoo-drive.sh

@@ -6,6 +6,18 @@
 * toolings for AwesomeWM, gentoo and perhaps others. 
 * If you want to deploy any of this code, good luck. 
 
+### setup-gentoo-drive.sh
+* Pretty broken but works if all things are lined up
+* will complain
+* So far it:
+* asks for a drive e.g. /dev/sda
+* formats it: boot /dev/sda1; boot/efi /dev/sda2; swap /dev/sda3; root /dev/sda4
+* with the ext4 filesystem, and FAT32 for the UEFI partition
+* the Manual formating option isn't fully functional
+* fetches lateset stage3 from gentoo; and install it.
+* sets you up in a basic chroot environment
+* doesn't test networking. 
+
 ### simple_genkern_update.sh
 * trying to be posix compliant, please complain if it isn't. 
 

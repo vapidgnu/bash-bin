@@ -11,7 +11,7 @@
 * run first!
 * best ran from the gentoo minimal install image because: 
 * doesn't test if `/dev/shm` is a symlink. *WILLFIX*
-* if installing from ubuntu `test -s /dev/shm && echo yes` will tell you
+* if installing from ubuntu `test -L /dev/shm && echo is symlink` will tell you
 ## `./set-post-chroot`
 * run once inside the chroot
 * needs work, and a way to drop in your own /etc/portage configs easily 

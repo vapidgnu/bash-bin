@@ -19,6 +19,7 @@
 ## `./simple_genkern_update.sh /usr/src/linux-kernel-version`
 * first argument needs to be the location of the kernel source e.g. `/usr/src/linux-4.19.66-gentoo`
 * needs further testing
+* `genkernel` must be installed 
 
 ### setup-gentoo-drive.sh
 * Pretty broken but works if all things are lined up

@@ -19,10 +19,6 @@ un_zip() {
         cd -
 }
 
-die() {
-        echo $@
-        exit
-}
 # if newer portage location isn't set
 # TODO: remove
 test -d /var/db/repos/gentoo/ || mkdir /var/db/repos/gentoo && \
@@ -57,7 +53,7 @@ mv lap0-etc-portage-master/* . && rmdir lap0-etc-portage-master
 cd -
 
 
-wget ${WORLD_FILE} -P /var/db/portage/ || exit $?
+wget ${WORLD_FILE} -O /var/db/portage/world || exit $?
 
 #TODO
 # echo 'app-editors/vim X cscope gpm lua perl python terminal vim-pager' > /etc/portage/package.use/app-editors.vim
@@ -68,11 +64,9 @@ wget ${WORLD_FILE} -P /var/db/portage/ || exit $?
 emerge -qv gentoo-sources
 
 # install "SYSTEM" packages
-emerge -vquNDkG system || exit $?
+emerge -vquNDkG world || exit $?
 
-# decompress world file, though should DL raw text. 
-# cd $1; unzip $2; rm $2; cd -
-un_zip /var/dp/portage world.zip
+
 
 ### System Configurations
 # Create /etc/env.d/02locale

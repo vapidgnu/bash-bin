@@ -18,12 +18,13 @@ ln -s $1 linux || echo $?
 zcat /proc/config.gz > linux/.config
 zcat /proc/config.gz > linux/config-current
 cd
-/usr/bin/genkernel --makeopts="-j8" \
+/usr/bin/genkernel --makeopts="-j$(nproc)" \
         --kernel-config=/usr/src/linux/config-current \
         --oldconfig \
         --microcode \
         all
 
+#should test if mounted first. 
 grub-mkconfig -o /boot/grub/grub.cfg
 
 

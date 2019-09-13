@@ -16,7 +16,8 @@
 * run once inside the chroot
 * needs work, and a way to drop in your own /etc/portage configs easily 
 * how it fetches and decompress from github is gross as fuck. sorry. 
-## `./simple_genkern_update.sh`
+## `./simple_genkern_update.sh /usr/src/linux-kernel-version`
+* first argument needs to be the location of the kernel source e.g. `/usr/src/linux-4.19.66-gentoo`
 * needs further testing
 
 ### setup-gentoo-drive.sh

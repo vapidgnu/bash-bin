@@ -3,7 +3,11 @@
 
 
 
+<<<<<<< HEAD
 CHROOT='/' && SYS='/sys' && DEV='/dev' && PROC='/proc'
+=======
+CHROOT='/' ; SYS='/sys' ; DEV='/dev' ; PROC='/proc'
+>>>>>>> 9195e314c9a9d2799e0acd1550d80ad90ca4cfe2
 is_mounted_v()
 {
     mountpoint ${CHROOT}

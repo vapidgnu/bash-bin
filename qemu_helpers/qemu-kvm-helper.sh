@@ -24,7 +24,7 @@ isnt() {
 }
 
 start_qemu () {
-     echo   sudo qemu-system-x86_64 \
+        sudo qemu-system-x86_64 \
                 -enable-kvm \
                 --display vnc=${HOST_IP}${VNC} \
                 -drive file=${DRIVE},format=${FORMAT} \

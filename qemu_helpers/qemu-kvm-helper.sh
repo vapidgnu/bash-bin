@@ -1,6 +1,17 @@
-# messy
+#!/bin/bash
+#
+# Script to start qemu with kvm enabled
+# Doesn't error when it could
+# qemu-kvm-helper.sh WIP-noversion
 
-# get commands options
+USAGE=$(cat << EOF
+USAGE: $(basename $0) -r RAM[k/m/g] -c CORES -d /path/to/drive
+-C/path/to/iso -f {raw,qcow2} -h host IP -t tap device -m MAC addr
+-v VNC display port -S [Runs the command] -W writes file to ...
+EOF
+)
+# unset
+STARTER=
 
 # command args
 declare -A ARGS
@@ -16,7 +27,7 @@ ARGS=(\
         [VNC]=${VNC} )
 
 die () {
-        echo $@ && exit ?
+        echo "DIED:$@" && exit 1
 }
 
 isnt() {
@@ -24,40 +35,59 @@ isnt() {
 }
 
 start_qemu () {
-        sudo qemu-system-x86_64 \
-                -enable-kvm \
+         sudo qemu-system-x86_64 \
+                -enable-kvm -smp cpus=${CORES} \
+                --display vnc=${HOST_IP}:${VNC} \
+                -drive file=${DRIVE},format=${FORMAT} \
+                -m ${RAM} \
+                -device virtio-net,netdev=network0 \
+                -netdev tap,id=network0,ifname=${TAP_DEV},\
+                mac=${MAC},script=no,downscript=no 
+}
+
+write_config () {
+        cat << EOF > qkvm-${1}.sh
+$( echo sudo qemu-system-x86_64 \
+                -enable-kvm -smp cpus=${CORES} \
                 --display vnc=${HOST_IP}${VNC} \
                 -drive file=${DRIVE},format=${FORMAT} \
                 -m ${RAM} \
                 -device virtio-net,netdev=network0 \
                 -netdev tap,id=network0,ifname=${TAP_DEV},\
-                mac=${MAC},script=no,downscript=no
+                mac=${MAC},script=no,downscript=no )
+EOF
 }
 
-while getopts r:c:d:C:f:h:t:m:v:S opt; do
+# get commands options
+while getopts r:c:d:C:f:i:t:m:v:W:S opt; do
         case "${opt}" in
                 r) RAM=$OPTARG;;
                 c) CORES=$OPTARG;;
                 d) DRIVE=$OPTARG;;
                 C) CDROM=$OPTARG;;
                 f) FORMAT=$OPTARG;;
-                h) HOST_IP=$OPTARG;;
+                i) HOST_IP=$OPTARG;;
                 t) TAP_DEV=$OPTARG;;
                 m) MAC=$OPTARG;;
                 v) VNC=$OPTARG;;
-                S) start_qemu;;
-                *) echo 'need args!'
+                W) write_config $OPTARG;;
+                S) STARTER=1;;
+                *) die $USAGE &&
         esac
 done
 
-# print usless test output
-echo "var tests: $RAM $CORES $DRIVE $CDROM $FORMAT $HOST_IP"
+# Hope there is only one interface is "UP"
 IPADDR=$(ip -br a | grep UP | cut -d/ -f 1 | awk '{print $3}')
 
 # set defaults if not set or do nothing otherwise.
 # boring; TODO: test each var for what it needs to be or err out.
+echo '###################################'
+echo '# will run KVM enabled QEMU with: #'
+echo '###################################'
 for x in ${!ARGS[@]}; do
         case $x in
+                # probably a better way to set
+                # default values other than here:
                 RAM) isnt $RAM && RAM=256M;;
                 CORES) isnt $CORES && CORES=1;;
                 DRIVE) isnt $DRIVE && DRIVE=;;
@@ -68,19 +98,9 @@ for x in ${!ARGS[@]}; do
                 MAC) isnt $MAC && MAC=$(macgen.sh);;
                 VNC) isnt $VNC && VNC=:3;;
         esac
-        echo  "${x} is ${!x}"
+        # double negitive wtf?
+        echo  "${x}:${!x}"
 done
 
-
-# print command that would be ran without tabs for copy/pasting
-echo command: $( echo "    sudo qemu-system-x86_64 \
-                -enable-kvm \
-                --display vnc=${HOST_IP}${VNC} \
-                -drive file=${DRIVE},format=${FORMAT} \
-                -m ${RAM} \
-                -device virtio-net,netdev=network0 \
-                -netdev tap,id=network0,ifname=${TAP_DEV},\
-                mac=${MAC},script=no,downscript=no
-"
-
-)
+# run command if -S flag was used
+isnt $STARTER || start_qemu

@@ -1,15 +1,21 @@
 #!/bin/bash
-#
-# Script to start qemu with kvm enabled
-# Doesn't error when it could
-# qemu-kvm-helper.sh WIP-noversion
+# qemu-kvm-helper.sh WIP
+# auth: me! silly.
+# Script to start qemu with kvm enabled.
+# Doesn't error when it could.
 
-USAGE=$(cat << EOF
-USAGE: $(basename $0) -r RAM[k/m/g] -c CORES -d /path/to/drive
--C/path/to/iso -f {raw,qcow2} -h host IP -t tap device -m MAC addr
--v VNC display port -S [Runs the command] -W writes file to ...
-EOF
-)
+# Good default vaules to set:
+# Leave blank if you want to use this script to write
+# custom start-up scripts for you with the -W flag.
+# CDROM doesn't nothing right now.
+DRIVE=;FORMAT=;RAM=;CORES=;HOST_IP=;TAP_DEV=;MAC=;VNC=
+
+USAGE="
+USAGE: $(basename $0) -r RAM[k/m/g], -c CORES, -d /path/to/drive,
+-C /path/to/iso, -f {raw,qcow2}, -h host IP, -t tap device, -m MAC addr,
+-v VNC display port, -S [Runs the command], -W writes to qkvm-[FILE].sh
+"
+
 # unset
 STARTER=
 
@@ -27,7 +33,7 @@ ARGS=(\
         [VNC]=${VNC} )
 
 die () {
-        echo "DIED:$@" && exit 1
+        echo -e "$?\n$@" && exit 1
 }
 
 isnt() {
@@ -42,7 +48,7 @@ start_qemu () {
                 -m ${RAM} \
                 -device virtio-net,netdev=network0 \
                 -netdev tap,id=network0,ifname=${TAP_DEV},\
-                mac=${MAC},script=no,downscript=no 
+                mac=${MAC},script=no,downscript=no
 }
 
 write_config () {
@@ -72,11 +78,12 @@ while getopts r:c:d:C:f:i:t:m:v:W:S opt; do
                 v) VNC=$OPTARG;;
                 W) write_config $OPTARG;;
                 S) STARTER=1;;
-                *) die $USAGE &&
+                *) die $USAGE
         esac
 done
 
-# Hope there is only one interface is "UP"
+# Hope only one interface is "UP"
+# Don't use.
 IPADDR=$(ip -br a | grep UP | cut -d/ -f 1 | awk '{print $3}')
 
 # set defaults if not set or do nothing otherwise.
@@ -101,6 +108,5 @@ for x in ${!ARGS[@]}; do
         # double negitive wtf?
         echo  "${x}:${!x}"
 done
-
 # run command if -S flag was used
 isnt $STARTER || start_qemu
